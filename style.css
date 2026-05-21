@@ -2,193 +2,107 @@
 
 :root {
     --matrix-green: #00ff41;
+    --matrix-light: #8aff9e;
     --matrix-dark: #003b00;
     --bg-color: #030303;
-    --panel-bg: rgba(0, 20, 0, 0.75);
+    --panel-bg: rgba(0, 15, 0, 0.85);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg-color);
-    color: var(--matrix-green);
+    color: var(--matrix-light);
     font-family: 'Fira Code', monospace;
     overflow-x: hidden;
     line-height: 1.6;
+    font-size: 16px;
 }
 
-/* --- BOOT SCREEN --- */
-#boot-screen {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    background-color: var(--bg-color);
-    z-index: 10000;
-    display: flex;
-    padding: 2rem;
-    font-size: 1.2rem;
-    color: var(--matrix-green);
-}
+/* --- EFFETS GLOBAUX --- */
+#boot-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 10000; display: flex; padding: 2rem; font-size: 1.1rem; color: var(--matrix-green); }
 #boot-text { white-space: pre-wrap; }
 
-/* Pluie Matrix */
-#matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; }
+#matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0.8; }
 
-/* Effet CRT */
-.crt-overlay {
-    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 2px, 3px 100%;
-    z-index: 999; pointer-events: none;
-}
+.crt-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; z-index: 998; pointer-events: none; }
+
+/* Animation Ligne de balayage */
+.scanline { position: fixed; top: 0; left: 0; width: 100vw; height: 5px; background: rgba(0, 255, 65, 0.3); opacity: 0.4; z-index: 999; pointer-events: none; animation: scanline 6s linear infinite; box-shadow: 0 0 10px var(--matrix-green); }
+@keyframes scanline { 0% { top: -10px; } 100% { top: 100vh; } }
 
 .terminal-container { max-width: 1000px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
 
-/* Navigation */
-.terminal-nav {
-    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
-    background: var(--matrix-dark); padding: 1rem; border: 1px solid var(--matrix-green);
-    margin-bottom: 2rem; box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
-}
-.nav-btn {
-    background: transparent; color: var(--matrix-green); border: none;
-    font-family: 'Fira Code', monospace; font-size: 1rem; cursor: pointer; transition: 0.3s;
-}
-.nav-btn:hover, .nav-btn.active {
-    color: white; text-shadow: 0 0 8px var(--matrix-green); background: rgba(0, 255, 65, 0.1); padding: 0 5px;
-}
+/* --- NAVIGATION RESPONSIVE --- */
+.terminal-nav { display: flex; justify-content: space-between; align-items: center; background: var(--matrix-dark); padding: 1rem; border: 1px solid var(--matrix-green); margin-bottom: 2rem; box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
+.nav-buttons { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.nav-btn { background: transparent; color: var(--matrix-green); border: none; font-family: 'Fira Code', monospace; font-size: 1rem; cursor: pointer; transition: 0.3s; padding: 0.5rem 1rem; }
+.nav-btn:hover, .nav-btn.active { color: #000; background: var(--matrix-green); box-shadow: 0 0 10px var(--matrix-green); font-weight: bold; }
 
-/* Animations et Pages */
-.page-section { display: none; animation: slideUp 0.5s ease-out; }
+/* --- SECTIONS ET PANNEAUX --- */
+.page-section { display: none; animation: slideUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .active-section { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.home-header { text-align: center; margin: 20vh 0; }
+.glitch { font-size: clamp(2rem, 5vw, 4rem); font-weight: bold; color: white; text-shadow: 0 0 15px var(--matrix-green); }
+.subtitle { font-size: 1.2rem; min-height: 30px; margin-bottom: 2rem; }
 
-/* Glitch Title */
-header { text-align: center; margin: 3rem 0; }
-.glitch {
-    font-size: 3rem; font-weight: bold; position: relative; display: inline-block;
-    color: white; text-shadow: 0 0 10px var(--matrix-green);
-}
-
-/* Panneaux */
-.panel {
-    background: var(--panel-bg); border: 1px solid var(--matrix-dark); margin-bottom: 2rem;
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); backdrop-filter: blur(5px);
-}
+.panel { background: var(--panel-bg); border: 1px solid var(--matrix-dark); margin-bottom: 2rem; backdrop-filter: blur(5px); border-radius: 4px; overflow: hidden; }
 .panel-header { background: var(--matrix-dark); padding: 0.5rem 1rem; font-weight: bold; border-bottom: 1px solid var(--matrix-green); color: white; }
 .panel-content { padding: 1.5rem; }
+.highlight-panel { border-color: var(--matrix-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.15); }
 
-/* Projets */
-.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.project-card {
-    border: 1px solid var(--matrix-dark); padding: 1.5rem; transition: 0.3s;
-    background: rgba(0, 50, 0, 0.3); position: relative;
+/* --- PROFIL ET PHOTO --- */
+.profile-layout { display: flex; gap: 2rem; align-items: flex-start; }
+.profile-image-container { position: relative; width: 160px; height: 160px; flex-shrink: 0; border: 2px solid var(--matrix-green); padding: 5px; background: black; }
+.matrix-photo { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) sepia(100%) hue-rotate(75deg) saturate(300%) contrast(150%) brightness(0.9); }
+.status-badge { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); background: var(--bg-color); color: var(--matrix-green); border: 1px solid var(--matrix-green); padding: 2px 10px; font-size: 0.8rem; font-weight: bold; }
+.section-title { color: white; margin-bottom: 1rem; font-size: 1.5rem; text-transform: uppercase; }
+
+/* --- UTILITAIRES --- */
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.text-center { text-align: center; }
+.prompt { color: var(--matrix-green); font-weight: bold; }
+
+/* --- BOUTONS MIS EN ÉVIDENCE --- */
+.btn-matrix { display: inline-block; padding: 0.8rem 1.5rem; border: 1px solid var(--matrix-green); background: rgba(0, 20, 0, 0.6); color: var(--matrix-green); font-family: 'Fira Code', monospace; text-decoration: none; cursor: pointer; transition: all 0.3s ease; font-weight: bold; text-transform: uppercase; border-radius: 3px; }
+.btn-matrix:hover { background: var(--matrix-green); color: black; box-shadow: 0 0 20px var(--matrix-green); }
+
+.action-btn { font-size: 1.1rem; }
+.center-actions { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+
+/* Animation Pulsation pour l'appel à l'action (CV) */
+.pulse-btn { animation: pulseGlow 2s infinite; border-width: 2px; }
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(0, 255, 65, 0.4); }
 }
-.project-card:hover {
-    transform: scale(1.02); border-color: var(--matrix-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
-}
-.project-card h3 { color: white; margin-bottom: 1rem; font-size: 1.1rem; }
-.tech-stack { display: block; margin-top: 1rem; font-size: 0.85rem; color: #aaa; border-top: 1px dashed var(--matrix-dark); padding-top: 0.5rem; }
-.highlight-card { border-left: 3px solid var(--matrix-green); }
 
-.prompt { font-weight: bold; margin-right: 10px; color: white; }
-a { color: var(--matrix-green); text-decoration: none; border-bottom: 1px dashed var(--matrix-green); }
-a:hover { background: var(--matrix-green); color: black; }
+/* --- GRILLES (Compétences et Projets) --- */
+.skill-grid { display: flex; flex-wrap: wrap; gap: 1rem; }
+.skill-tag { border: 1px solid var(--matrix-green); padding: 0.5rem 1rem; background: rgba(0, 255, 65, 0.05); }
 
-/* --- MODULE PROFIL ET PHOTO --- */
-.profile-layout {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-}
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+.project-card { border: 1px solid var(--matrix-dark); padding: 1.5rem; transition: 0.3s; background: rgba(0, 10, 0, 0.5); cursor: crosshair; }
+.project-card:hover { transform: translateY(-5px); border-color: var(--matrix-green); box-shadow: 0 5px 20px rgba(0, 255, 65, 0.2); }
+.project-card h3 { color: white; margin-bottom: 1rem; font-size: 1.2rem; }
+.tech-stack { display: block; margin-top: 1rem; font-size: 0.85rem; color: #55aa55; border-top: 1px dashed var(--matrix-dark); padding-top: 0.5rem; }
+.highlight-card { border-left: 4px solid var(--matrix-green); }
 
+/* --- RESPONSIVE MOBILE --- */
 @media (max-width: 768px) {
-    .profile-layout {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-}
-
-.profile-image-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    flex-shrink: 0;
-    border: 2px solid var(--matrix-green);
-    padding: 5px;
-    background: rgba(0, 50, 0, 0.5);
-}
-
-/* LE FILTRE MAGIQUE MATRIX POUR LA PHOTO */
-.matrix-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* Transforme n'importe quelle photo en vert hacker hyper contrasté */
-    filter: grayscale(100%) sepia(100%) hue-rotate(75deg) saturate(300%) contrast(150%) brightness(0.8);
-    display: block;
-}
-
-.photo-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
-        transparent 1px,
-        transparent 2px
-    );
-    pointer-events: none;
-}
-
-.status-badge {
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--bg-color);
-    color: var(--matrix-green);
-    border: 1px solid var(--matrix-green);
-    padding: 2px 8px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    white-space: nowrap;
-    animation: blink 2s infinite;
-}
-
-/* --- MODULE CV --- */
-.cv-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.btn-matrix {
-    display: inline-block;
-    padding: 0.6rem 1.5rem;
-    border: 1px solid var(--matrix-green);
-    background: transparent;
-    color: var(--matrix-green);
-    font-family: 'Fira Code', monospace;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-}
-
-.btn-matrix:hover {
-    background: var(--matrix-green);
-    color: var(--bg-color);
-    box-shadow: 0 0 15px var(--matrix-green);
-    text-shadow: none;
-}
-
-.download-btn {
-    border-style: dashed;
-}
-.download-btn:hover {
-    border-style: solid;
+    .terminal-container { padding: 1rem; }
+    .mobile-hide { display: none; }
+    .nav-buttons { justify-content: center; width: 100%; gap: 0.3rem; }
+    .nav-btn { font-size: 0.85rem; padding: 0.5rem; }
+    
+    .profile-layout { flex-direction: column; align-items: center; text-align: center; }
+    .profile-info { margin-top: 1rem; }
+    
+    .center-actions, .contact-links { flex-direction: column; width: 100%; }
+    .btn-matrix { width: 100%; text-align: center; }
 }

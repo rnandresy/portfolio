@@ -1,13 +1,11 @@
-// --- 1. SÉQUENCE DE BOOT (Effet d'allumage) ---
+// --- 1. SÉQUENCE DE BOOT ---
 const bootText = [
-    "Initialisation du noyau...",
-    "Chargement des modules réseau....... [OK]",
-    "Vérification de l'interface eth0.... [OK]",
-    "Établissement du tunnel Wireguard... [OK]",
-    "Montage des systèmes de fichiers.... [OK]",
-    "Démarrage du processus Bêta......... [OK]",
-    "Accès Root accordé.",
-    "Lancement de l'interface utilisateur..."
+    "Connexion au terminal distant...",
+    "Décryptage des données RH............ [OK]",
+    "Vérification des compétences techniques. [OK]",
+    "Chargement du profil candidat........ [OK]",
+    "Accès sécurisé accordé.",
+    "Lancement de l'interface visuelle..."
 ];
 
 const bootScreen = document.getElementById('boot-screen');
@@ -20,20 +18,20 @@ function simulateBoot() {
     if (bootLine < bootText.length) {
         bootTextContainer.innerHTML += bootText[bootLine] + "<br>";
         bootLine++;
-        // Vitesse de lecture aléatoire pour simuler un vrai chargement
-        setTimeout(simulateBoot, Math.random() * 300 + 100);
+        setTimeout(simulateBoot, Math.random() * 200 + 100);
     } else {
         setTimeout(() => {
-            bootScreen.style.display = 'none';
-            mainApp.style.display = 'block';
-            startTypewriter(); // Lance le sous-titre une fois le boot fini
-        }, 800);
+            bootScreen.style.opacity = '0';
+            setTimeout(() => {
+                bootScreen.style.display = 'none';
+                mainApp.style.display = 'block';
+                startTypewriter();
+            }, 500);
+        }, 600);
     }
 }
 
-// Lancer le boot au chargement de la page
 window.onload = simulateBoot;
-
 
 // --- 2. PLUIE MATRIX ---
 const canvas = document.getElementById('matrix-canvas');
@@ -41,15 +39,15 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-const fontSize = 14;
+const chars = '01'.split(''); // Code binaire pour être plus lisible en fond
+const fontSize = 16;
 const columns = canvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
 
 function drawMatrix() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.08)'; // Plus sombre pour mieux lire le texte devant
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#0F0';
+    ctx.fillStyle = '#005500'; // Vert plus foncé pour ne pas agresser les yeux des recruteurs
     ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < drops.length; i++) {
@@ -59,45 +57,64 @@ function drawMatrix() {
         drops[i]++;
     }
 }
-setInterval(drawMatrix, 35);
+setInterval(drawMatrix, 40);
 
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
 
-
 // --- 3. EFFET MACHINE À ÉCRIRE ---
-const subtitleText = "Analyse de paquets en cours... Prêt pour le déploiement.";
+const subtitleText = "Analyse de profil en cours. Prêt pour l'entretien.";
 const typewriterElement = document.getElementById('typewriter');
 let charIndex = 0;
 
 function startTypewriter() {
     if (charIndex < subtitleText.length) {
-        typewriterElement.innerHTML = subtitleText.substring(0, charIndex + 1) + '<span class="cursor">_</span>';
+        typewriterElement.innerHTML = subtitleText.substring(0, charIndex + 1) + '<span style="animation: blink 1s infinite">_</span>';
         charIndex++;
         setTimeout(startTypewriter, Math.random() * 50 + 30);
-    } else {
-        typewriterElement.innerHTML = subtitleText + '<span class="cursor blink">_</span>';
     }
 }
 
+// --- 4. NAVIGATION SPA AVANCÉE ---
+function navigateTo(targetId) {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.page-section');
 
-// --- 4. NAVIGATION SPA ---
-const navButtons = document.querySelectorAll('.nav-btn');
-const sections = document.querySelectorAll('.page-section');
+    // Mise à jour des boutons du menu
+    navButtons.forEach(btn => {
+        if(btn.getAttribute('data-target') === targetId) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 
-navButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        navButtons.forEach(b => b.classList.remove('active'));
-        sections.forEach(s => {
-            s.classList.remove('active-section');
-            s.classList.add('hidden');
-        });
+    // Affichage de la section
+    sections.forEach(s => {
+        s.classList.remove('active-section');
+        s.classList.add('hidden');
+    });
 
-        btn.classList.add('active');
-        const targetSection = document.getElementById(btn.getAttribute('data-target'));
+    const targetSection = document.getElementById(targetId);
+    if(targetSection) {
         targetSection.classList.remove('hidden');
         targetSection.classList.add('active-section');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+// Clics sur le menu
+document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        navigateTo(e.target.getAttribute('data-target'));
+    });
+});
+
+// Clics sur les boutons d'appel à l'action (ex: bouton accueil vers profil)
+document.querySelectorAll('.nav-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        navigateTo(e.target.getAttribute('data-target'));
     });
 });

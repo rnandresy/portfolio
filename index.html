@@ -12,31 +12,38 @@
         <div id="boot-text"></div>
     </div>
 
+    <!-- Effets d'écran (Pluie, CRT et Scanline animée) -->
     <div class="crt-overlay"></div>
+    <div class="scanline"></div>
     <canvas id="matrix-canvas"></canvas>
 
     <div class="terminal-container" id="main-app" style="display: none;">
+        
+        <!-- Menu Navigation Optimisé Mobile -->
         <nav class="terminal-nav">
-            <span class="prompt">root@fianarantsoa:~$</span> <!-- -->
-            <button class="nav-btn active" data-target="home">./accueil.sh</button>
-            <button class="nav-btn" data-target="about">cat system_info.txt</button>
-            <button class="nav-btn" data-target="projects">ls /opt/projets</button>
-            <button class="nav-btn" data-target="contact">ping network</button>
+            <span class="prompt mobile-hide">root@fianarantsoa:~$</span>
+            <div class="nav-buttons">
+                <button class="nav-btn active" data-target="home">./ACCUEIL</button>
+                <button class="nav-btn" data-target="about">./PROFIL</button>
+                <button class="nav-btn" data-target="projects">./PROJETS</button>
+                <button class="nav-btn" data-target="contact">./CONTACT</button>
+            </div>
         </nav>
 
         <main id="main-content">
             <!-- ACCUEIL -->
             <section id="home" class="page-section active-section">
-                <header>
-                    <h1 class="glitch" data-text="SYS_ADMIN_ONLINE">SYS_ADMIN_ONLINE</h1>
+                <header class="home-header">
+                    <h1 class="glitch" data-text="SYSTÈME OPÉRATIONNEL">SYSTÈME OPÉRATIONNEL</h1>
                     <p id="typewriter" class="subtitle"></p>
+                    <button class="btn-matrix pulse-btn mt-2 nav-trigger" data-target="about">>>> INITIALISER_LA_RENCONTRE</button>
                 </header>
             </section>
 
             <!-- À PROPOS -->
             <section id="about" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> ./identity_check.sh</div>
+                    <div class="panel-header">>>> extraction_donnees_profil.sh</div>
                     
                     <div class="panel-content profile-layout">
                         <!-- Bloc Photo -->
@@ -46,75 +53,72 @@
                             <span class="status-badge">[ ONLINE ]</span>
                         </div>
 
-                        <!-- Bloc Infos -->
+                        <!-- Bloc Infos (Vulgarisé pour les RH) -->
                         <div class="profile-info">
-                            <p><span class="prompt">[INFO]</span> Étudiant de 3ème année de licence en administration système et réseaux.</p>
-                            <p><span class="prompt">[INFO]</span> Localisation : Université de Fianarantsoa.</p>
-                            <p><span class="prompt">[INFO]</span> Accréditation : Niveau Bac+2 validé.</p>
-                            <br>
-                            <p>Opérateur technique polyvalent, capable d'intervenir sur le déploiement d'infrastructures réseaux, la cybersécurité, mais aussi la gestion d'actifs (assistant technique/financier). Intérêt marqué pour la finance décentralisée et le trading d'options (Pocket Option).</p>
+                            <h2 class="section-title">Technicien Réseaux & Systèmes</h2>
+                            <p><span class="prompt">></span> <strong>Formation :</strong> 3ème année de Licence Info (Bac+2 validé) à l'Université de Fianarantsoa.</p>
+                            <p><span class="prompt">></span> <strong>Ma Mission :</strong> Rendre l'informatique invisible mais infaillible. Je conçois, sécurise et maintiens les réseaux pour que les entreprises tournent sans interruption.</p>
+                            <p><span class="prompt">></span> <strong>Profil Hybride :</strong> Je suis aussi à l'aise dans les lignes de commande de sécurité que dans la gestion d'actifs (assistant technique/financier). Esprit d'analyse aiguisé par le trading et l'investissement.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- NOUVEAU BLOC : MODULE CV -->
-                <div class="panel">
-                    <div class="panel-header">>>> ls -l /documents/cv.pdf</div>
-                    <div class="panel-content cv-module">
-                        <p>Fichier crypté : <strong>cv_admin_reseau.pdf</strong> | Taille : 1.2 MB | Permissions : -rwxr-xr-x</p>
-                        <div class="cv-actions">
-                            <a href="cv.pdf" target="_blank" class="btn-matrix">>>> ./VIEW_CV</a>
-                            <a href="cv.pdf" download="CV_Ton_Nom.pdf" class="btn-matrix download-btn">>>> DOWNLOAD_CV.exe</a>
+                <!-- MODULE CV MIS EN ÉVIDENCE -->
+                <div class="panel highlight-panel">
+                    <div class="panel-header">>>> telechargement_documents.exe</div>
+                    <div class="panel-content cv-module text-center">
+                        <p class="mb-1">Mon dossier complet est prêt à être analysé par vos systèmes.</p>
+                        <div class="cv-actions center-actions">
+                            <a href="cv.pdf" target="_blank" class="btn-matrix action-btn">👁️ VISUALISER LE CV</a>
+                            <a href="cv.pdf" download="CV_Candidat.pdf" class="btn-matrix action-btn pulse-btn">💾 TÉLÉCHARGER (.PDF)</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="panel">
-                    <div class="panel-header">>>> cat skills.list</div>
+                    <div class="panel-header">>>> cat competences_cles.txt</div>
                     <div class="panel-content skill-grid">
-                        <div class="skill-tag">Administration Linux (Kali)</div>
-                        <div class="skill-tag">Réseaux & Ponts Wi-Fi</div>
-                        <div class="skill-tag">Cybersécurité & CTF</div>
-                        <div class="skill-tag">Déploiement VPN</div>
-                        <div class="skill-tag">Émulation Hardware</div>
+                        <div class="skill-tag delay-1">Administration Serveurs (Linux)</div>
+                        <div class="skill-tag delay-2">Sécurité & Réseaux Privés (VPN)</div>
+                        <div class="skill-tag delay-3">Cybersécurité (Défense/Attaque)</div>
+                        <div class="skill-tag delay-4">Optimisation Matérielle</div>
+                        <div class="skill-tag delay-5">Support & Maintenance IT</div>
                     </div>
                 </div>
             </section>
 
-            <!-- PROJETS (Tes vrais projets terminés) -->
+            <!-- PROJETS -->
             <section id="projects" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> tree /opt/projets/completed/</div>
+                    <div class="panel-header">>>> liste_realisations.log</div>
                     <div class="panel-content project-grid">
                         
                         <div class="project-card">
-                            <h3>[ VPN & SecOps ]</h3>
-                            <p>Déploiement et configuration avancée d'une infrastructure VPN Wireguard sur environnement Kali Linux. <!-- --></p>
-                            <span class="tech-stack">#Wireguard #KaliLinux #CyberSec</span>
+                            <h3>[ Sécurité Réseau Entreprise ]</h3>
+                            <p><strong>L'objectif :</strong> Protéger les données sensibles.</p>
+                            <p>Mise en place d'un réseau privé ultra-sécurisé (VPN Wireguard) permettant des connexions à distance chiffrées de bout en bout.</p>
+                            <span class="tech-stack">#Sécurité #Télétravail #Linux</span>
                         </div>
 
                         <div class="project-card">
-                            <h3>[ Opération Cyber Cup ]</h3>
-                            <p>Préparation intensive et résolution de défis de sécurité offensifs/défensifs dans le cadre de la compétition technique Cyber Cup. <!-- --></p>
-                            <span class="tech-stack">#CTF #Hacking #Defense</span>
-                        </div>
-
-                        <div class="project-card">
-                            <h3>[ Émulation Hardware ]</h3>
-                            <p>Expérimentation sur architecture mobile : déploiement de Winlator sur Tecno Pouvoir 4 Pro pour l'exécution d'environnements PC. <!-- --></p>
-                            <span class="tech-stack">#Winlator #ARM #x86 #MobileTech</span>
-                        </div>
-
-                        <div class="project-card">
-                            <h3>[ Ponts Wi-Fi Tenda ]</h3>
-                            <p>Configuration, gestion et optimisation d'équipements de pont Wi-Fi Tenda pour l'extension et la stabilité de réseaux locaux. <!-- --></p>
-                            <span class="tech-stack">#Networking #Tenda #Infrastructure</span>
+                            <h3>[ Compétitions Cyber Cup ]</h3>
+                            <p><strong>L'objectif :</strong> Tester les failles avant les hackers.</p>
+                            <p>Participation à des simulations d'attaques et de défenses (CTF) pour comprendre et bloquer les menaces informatiques actuelles.</p>
+                            <span class="tech-stack">#Cybersécurité #Analyse #Défense</span>
                         </div>
 
                         <div class="project-card highlight-card">
-                            <h3>[ Mini Réseau Social ]</h3>
-                            <p>Développement complet d'une application de réseau social miniature intégrant des fonctionnalités d'interaction uniques et originales. <!-- --></p>
-                            <span class="tech-stack">#DevApp #Innovation #Architecture</span>
+                            <h3>[ Application Web P2P ]</h3>
+                            <p><strong>L'objectif :</strong> Créer du lien numérique.</p>
+                            <p>Développement de A à Z d'un mini réseau social avec des fonctionnalités interactives et une architecture moderne.</p>
+                            <span class="tech-stack">#Développement #Innovation #Web</span>
+                        </div>
+
+                        <div class="project-card">
+                            <h3>[ Extensions Wi-Fi Longue Portée ]</h3>
+                            <p><strong>L'objectif :</strong> Connecter l'inaccessible.</p>
+                            <p>Configuration de ponts matériels (Tenda) pour étendre la couverture internet sur de grandes surfaces sans perte de débit.</p>
+                            <span class="tech-stack">#Infrastructure #RéseauLocal</span>
                         </div>
 
                     </div>
@@ -123,13 +127,17 @@
 
             <!-- CONTACT -->
             <section id="contact" class="page-section hidden">
-                <div class="panel">
-                    <div class="panel-header">>>> netstat -an | grep ESTABLISHED</div>
-                    <div class="panel-content">
-                        <p>Prêt à établir une connexion sécurisée (P2P ou B2B). En attente de requêtes...</p>
-                        <br>
-                        <p><span class="prompt">Email:</span> <a href="mailto:ton.email@email.com">admin@ton-domaine.com</a></p>
-                        <p><span class="prompt">GitHub:</span> <a href="#" target="_blank">github.com/ton-profil</a></p>
+                <div class="panel highlight-panel">
+                    <div class="panel-header">>>> etablir_connexion_securisee.sh</div>
+                    <div class="panel-content text-center">
+                        <h2 class="mb-1">Prêt à intégrer votre équipe.</h2>
+                        <p>Le système est en écoute. Vous pouvez me pinger sur ces canaux sécurisés :</p>
+                        
+                        <div class="contact-links mt-2">
+                            <a href="mailto:ton.email@email.com" class="btn-matrix action-btn">✉️ ENVOYER UN E-MAIL</a>
+                            <a href="#" target="_blank" class="btn-matrix action-btn">🔗 PROFIL LINKEDIN</a>
+                            <a href="#" target="_blank" class="btn-matrix action-btn">💻 GITHUB (CODE)</a>
+                        </div>
                     </div>
                 </div>
             </section>
