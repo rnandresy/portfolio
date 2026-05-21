@@ -236,7 +236,7 @@ a:hover {
     .terminal-container { padding: 1rem; }
 }
 
-/* --- NOUVEAUX STYLES POUR LA NAVIGATION --- */
+/* --- NOUVEAUX STYLES POUR LA NAVIGATION -- */
 .terminal-nav {
     display: flex;
     flex-wrap: wrap;

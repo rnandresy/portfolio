@@ -66,7 +66,7 @@ function typeWriter() {
     }
 }
 
-// Lancer l'effet après un court délai
+// Lancer l'effet après un court déla
 setTimeout(typeWriter, 1000);
 
 // --- 3. Gestion de la Navigation ---
