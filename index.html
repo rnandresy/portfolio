@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Système Initialisé</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="terminal-container">
+        <!-- Navigation style Terminal -->
+        <nav class="terminal-nav">
+            <span class="prompt">root@system:~$</span>
+            <button class="nav-btn active" data-target="home">./accueil.sh</button>
+            <button class="nav-btn" data-target="about">cat about.txt</button>
+            <button class="nav-btn" data-target="projects">ls /projets</button>
+            <button class="nav-btn" data-target="contact">ping contact</button>
+        </nav>
+
+        <main id="main-content">
+            <!-- PAGE : ACCUEIL -->
+            <section id="home" class="page-section active-section">
+                <header>
+                    <h1 class="glitch" data-text="SYS_ADMIN_READY">SYS_ADMIN_READY</h1>
+                    <p id="typewriter" class="subtitle"></p>
+                </header>
+            </section>
+
+            <!-- PAGE : À PROPOS -->
+            <section id="about" class="page-section hidden">
+                <div class="panel">
+                    <div class="panel-header">>>> whoami</div>
+                    <div class="panel-content">
+                        <p><span class="prompt">Formation:</span> Étudiant en 3ème année de Licence en Administration Système et Réseaux à l'Université de Fianarantsoa.</p>
+                        <p><span class="prompt">Niveau:</span> Bac+2 validé.</p>
+                        <br>
+                        <p>Je me spécialise dans la création, la sécurisation et le maintien d'infrastructures informatiques. Mon objectif est d'allier performance réseau et sécurité maximale, tout en explorant les nouvelles technologies d'émulation et de ponts réseaux.</p>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">>>> cat skills.list</div>
+                    <div class="panel-content skill-grid">
+                        <div class="skill-tag">Administration Linux (Kali)</div>
+                        <div class="skill-tag">Réseaux & Ponts Wi-Fi</div>
+                        <div class="skill-tag">Cybersécurité & CTF</div>
+                        <div class="skill-tag">Déploiement VPN</div>
+                        <div class="skill-tag">Émulation Hardware</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE : PROJETS -->
+            <section id="projects" class="page-section hidden">
+                <div class="panel">
+                    <div class="panel-header">>>> ls -la /home/projets/</div>
+                    <div class="panel-content project-grid">
+                        <div class="project-card">
+                            <h3>[ Infrastructure Sécurisée ]</h3>
+                            <p>Déploiement, configuration et gestion de serveurs VPN Wireguard sur un environnement Kali Linux.</p>
+                            <span class="tech-stack">#Wireguard #KaliLinux #SecOps</span>
+                        </div>
+                        <div class="project-card">
+                            <h3>[ Cyber Cup ]</h3>
+                            <p>Préparation technique, entraînement intensif et résolution de défis de cybersécurité pour la compétition Cyber Cup.</p>
+                            <span class="tech-stack">#CTF #CyberSec #Hacking</span>
+                        </div>
+                        <div class="project-card">
+                            <h3>[ Dev: Réseau Social ]</h3>
+                            <p>Conception et développement d'une application de mini réseau social intégrant des fonctionnalités d'interaction uniques.</p>
+                            <span class="tech-stack">#DevApp #Innovation</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE : CONTACT -->
+            <section id="contact" class="page-section hidden">
+                <div class="panel">
+                    <div class="panel-header">>>> ./etablir_connexion.sh</div>
+                    <div class="panel-content">
+                        <p>Le système est en écoute de nouvelles opportunités. Prêt à intégrer une équipe technique.</p>
+                        <br>
+                        <p><span class="prompt">Email:</span> <a href="mailto:TON_EMAIL@email.com">TON_EMAIL@email.com</a></p>
+                        <p><span class="prompt">GitHub:</span> <a href="#" target="_blank">github.com/TON_PROFIL</a></p>
+                        <p><span class="prompt">LinkedIn:</span> <a href="#" target="_blank">linkedin.com/in/TON_PROFIL</a></p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
