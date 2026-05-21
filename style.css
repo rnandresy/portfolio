@@ -4,14 +4,10 @@
     --matrix-green: #00ff41;
     --matrix-dark: #003b00;
     --bg-color: #030303;
-    --panel-bg: rgba(0, 20, 0, 0.7);
+    --panel-bg: rgba(0, 20, 0, 0.75);
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     background-color: var(--bg-color);
@@ -21,266 +17,80 @@ body {
     line-height: 1.6;
 }
 
-/* Pluie Matrix en arrière-plan */
-#matrix-canvas {
+/* --- BOOT SCREEN --- */
+#boot-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: var(--bg-color);
+    z-index: 10000;
+    display: flex;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: var(--matrix-green);
 }
+#boot-text { white-space: pre-wrap; }
 
-/* Effet CRT (Scanlines) */
+/* Pluie Matrix */
+#matrix-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; }
+
+/* Effet CRT */
 .crt-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 2px, 3px 100%;
-    z-index: 999;
-    pointer-events: none;
+    z-index: 999; pointer-events: none;
 }
 
-.terminal-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-    position: relative;
-    z-index: 1;
-}
+.terminal-container { max-width: 1000px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
 
-header {
-    text-align: center;
-    margin-bottom: 4rem;
-    margin-top: 2rem;
-}
-
-/* Animation Glitch */
-.glitch {
-    font-size: 3rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    position: relative;
-    display: inline-block;
-    color: white;
-    text-shadow: 0 0 10px var(--matrix-green);
-}
-
-.glitch::before, .glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bg-color);
-}
-
-.glitch::before {
-    left: 2px;
-    text-shadow: -2px 0 red;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-anim 5s infinite linear alternate-reverse;
-}
-
-.glitch::after {
-    left: -2px;
-    text-shadow: -2px 0 blue;
-    clip: rect(44px, 450px, 56px, 0);
-    animation: glitch-anim2 5s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim {
-    0% { clip: rect(13px, 9999px, 83px, 0); }
-    5% { clip: rect(65px, 9999px, 19px, 0); }
-    10% { clip: rect(40px, 9999px, 50px, 0); }
-    15% { clip: rect(10px, 9999px, 20px, 0); }
-    20% { clip: rect(90px, 9999px, 30px, 0); }
-    25% { clip: rect(50px, 9999px, 60px, 0); }
-    100% { clip: rect(50px, 9999px, 60px, 0); }
-}
-
-@keyframes glitch-anim2 {
-    0% { clip: rect(35px, 9999px, 21px, 0); }
-    5% { clip: rect(15px, 9999px, 80px, 0); }
-    10% { clip: rect(80px, 9999px, 40px, 0); }
-    15% { clip: rect(20px, 9999px, 10px, 0); }
-    20% { clip: rect(40px, 9999px, 90px, 0); }
-    25% { clip: rect(60px, 9999px, 50px, 0); }
-    100% { clip: rect(60px, 9999px, 50px, 0); }
-}
-
-.subtitle {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    min-height: 30px;
-}
-
-/* Curseurs et Prompts */
-.prompt {
-    color: white;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.cursor {
-    display: inline-block;
-    width: 10px;
-    height: 20px;
-    background-color: var(--matrix-green);
-    animation: blink 1s step-end infinite;
-    vertical-align: bottom;
-}
-
-@keyframes blink { 50% { opacity: 0; } }
-
-/* Panneaux de contenu */
-.panel {
-    background: var(--panel-bg);
-    border: 1px solid var(--matrix-dark);
-    margin-bottom: 2rem;
-    box-shadow: 0 0 15px rgba(0, 255, 65, 0.1);
-    backdrop-filter: blur(3px);
-    transition: all 0.3s ease;
-}
-
-.panel:hover {
-    border-color: var(--matrix-green);
-    box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
-}
-
-.panel-header {
-    background: var(--matrix-dark);
-    padding: 0.5rem 1rem;
-    font-weight: bold;
-    border-bottom: 1px solid var(--matrix-green);
-}
-
-.panel-content {
-    padding: 1.5rem;
-}
-
-/* Grilles (Compétences & Projets) */
-.skill-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.skill-tag {
-    border: 1px solid var(--matrix-green);
-    padding: 0.3rem 0.8rem;
-    font-size: 0.9rem;
-}
-
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-}
-
-.project-card {
-    border: 1px dashed var(--matrix-dark);
-    padding: 1rem;
-    transition: transform 0.2s;
-}
-
-.project-card:hover {
-    transform: translateY(-5px);
-    border-style: solid;
-    border-color: var(--matrix-green);
-}
-
-.project-card h3 {
-    margin-bottom: 0.5rem;
-    color: white;
-}
-
-/* Boutons et Liens */
-a {
-    color: var(--matrix-green);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: 0.3s;
-}
-
-a:hover {
-    border-bottom: 1px solid var(--matrix-green);
-    text-shadow: 0 0 8px var(--matrix-green);
-}
-
-.btn-matrix {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.5rem 1.5rem;
-    border: 1px solid var(--matrix-green);
-    background: transparent;
-    color: var(--matrix-green);
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.btn-matrix:hover {
-    background: var(--matrix-green);
-    color: var(--bg-color);
-    box-shadow: 0 0 15px var(--matrix-green);
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-    .glitch { font-size: 1.8rem; }
-    .terminal-container { padding: 1rem; }
-}
-
-/* --- NOUVEAUX STYLES POUR LA NAVIGATION -- */
+/* Navigation */
 .terminal-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    background: var(--matrix-dark);
-    padding: 1rem;
-    border: 1px solid var(--matrix-green);
-    margin-bottom: 2rem;
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+    background: var(--matrix-dark); padding: 1rem; border: 1px solid var(--matrix-green);
+    margin-bottom: 2rem; box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
 }
-
 .nav-btn {
-    background: transparent;
-    color: var(--matrix-green);
-    border: none;
-    font-family: 'Fira Code', monospace;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s;
+    background: transparent; color: var(--matrix-green); border: none;
+    font-family: 'Fira Code', monospace; font-size: 1rem; cursor: pointer; transition: 0.3s;
 }
-
 .nav-btn:hover, .nav-btn.active {
-    color: white;
-    text-shadow: 0 0 8px var(--matrix-green);
-    text-decoration: underline;
+    color: white; text-shadow: 0 0 8px var(--matrix-green); background: rgba(0, 255, 65, 0.1); padding: 0 5px;
 }
 
-.page-section {
-    display: none;
-    animation: fadeIn 0.5s ease-in-out;
+/* Animations et Pages */
+.page-section { display: none; animation: slideUp 0.5s ease-out; }
+.active-section { display: block; }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Glitch Title */
+header { text-align: center; margin: 3rem 0; }
+.glitch {
+    font-size: 3rem; font-weight: bold; position: relative; display: inline-block;
+    color: white; text-shadow: 0 0 10px var(--matrix-green);
 }
 
-.active-section {
-    display: block;
+/* Panneaux */
+.panel {
+    background: var(--panel-bg); border: 1px solid var(--matrix-dark); margin-bottom: 2rem;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.1); backdrop-filter: blur(5px);
 }
+.panel-header { background: var(--matrix-dark); padding: 0.5rem 1rem; font-weight: bold; border-bottom: 1px solid var(--matrix-green); color: white; }
+.panel-content { padding: 1.5rem; }
 
-.tech-stack {
-    display: block;
-    margin-top: 1rem;
-    font-size: 0.8rem;
-    color: #888;
+/* Projets */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.project-card {
+    border: 1px solid var(--matrix-dark); padding: 1.5rem; transition: 0.3s;
+    background: rgba(0, 50, 0, 0.3); position: relative;
 }
+.project-card:hover {
+    transform: scale(1.02); border-color: var(--matrix-green); box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+}
+.project-card h3 { color: white; margin-bottom: 1rem; font-size: 1.1rem; }
+.tech-stack { display: block; margin-top: 1rem; font-size: 0.85rem; color: #aaa; border-top: 1px dashed var(--matrix-dark); padding-top: 0.5rem; }
+.highlight-card { border-left: 3px solid var(--matrix-green); }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+.prompt { font-weight: bold; margin-right: 10px; color: white; }
+a { color: var(--matrix-green); text-decoration: none; border-bottom: 1px dashed var(--matrix-green); }
+a:hover { background: var(--matrix-green); color: black; }

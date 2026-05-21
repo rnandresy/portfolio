@@ -1,90 +1,102 @@
-// --- 1. Animation de la Pluie Matrix ---
-const canvas = document.getElementById('matrix-canvas');
-const ctx = canvas.getContext('2d');
+// --- 1. SÉQUENCE DE BOOT (Effet d'allumage) ---
+const bootText = [
+    "Initialisation du noyau...",
+    "Chargement des modules réseau....... [OK]",
+    "Vérification de l'interface eth0.... [OK]",
+    "Établissement du tunnel Wireguard... [OK]",
+    "Montage des systèmes de fichiers.... [OK]",
+    "Démarrage du processus Bêta......... [OK]",
+    "Accès Root accordé.",
+    "Lancement de l'interface utilisateur..."
+];
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const bootScreen = document.getElementById('boot-screen');
+const bootTextContainer = document.getElementById('boot-text');
+const mainApp = document.getElementById('main-app');
 
-// Caractères (Katakana + Alphabet latin + Chiffres)
-const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const charArray = chars.split('');
+let bootLine = 0;
 
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = [];
-
-// Initialiser les gouttes
-for (let x = 0; x < columns; x++) {
-    drops[x] = 1;
-}
-
-function drawMatrix() {
-    // Fond noir semi-transparent pour créer la traînée (fade effect)
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#0F0'; // Vert néon
-    ctx.font = fontSize + 'px monospace';
-
-    for (let i = 0; i < drops.length; i++) {
-        // Caractère aléatoire
-        const text = charArray[Math.floor(Math.random() * charArray.length)];
-        
-        // Dessiner le caractère
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        // Réinitialiser la goutte aléatoirement ou la faire descendre
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]++;
+function simulateBoot() {
+    if (bootLine < bootText.length) {
+        bootTextContainer.innerHTML += bootText[bootLine] + "<br>";
+        bootLine++;
+        // Vitesse de lecture aléatoire pour simuler un vrai chargement
+        setTimeout(simulateBoot, Math.random() * 300 + 100);
+    } else {
+        setTimeout(() => {
+            bootScreen.style.display = 'none';
+            mainApp.style.display = 'block';
+            startTypewriter(); // Lance le sous-titre une fois le boot fini
+        }, 800);
     }
 }
 
-// Boucle d'animation
-setInterval(drawMatrix, 33);
+// Lancer le boot au chargement de la page
+window.onload = simulateBoot;
 
-// Redimensionnement dynamique du canvas
+
+// --- 2. PLUIE MATRIX ---
+const canvas = document.getElementById('matrix-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array(Math.floor(columns)).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0F0';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 35);
+
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 });
 
-// --- 2. Effet Machine à Écrire (Typewriter) ---
-const subtitleText = "Initialisation du système... Chargement des protocoles administrateur...";
+
+// --- 3. EFFET MACHINE À ÉCRIRE ---
+const subtitleText = "Analyse de paquets en cours... Prêt pour le déploiement.";
 const typewriterElement = document.getElementById('typewriter');
 let charIndex = 0;
 
-function typeWriter() {
+function startTypewriter() {
     if (charIndex < subtitleText.length) {
-        typewriterElement.innerHTML = subtitleText.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+        typewriterElement.innerHTML = subtitleText.substring(0, charIndex + 1) + '<span class="cursor">_</span>';
         charIndex++;
-        setTimeout(typeWriter, Math.random() * 50 + 50); // Vitesse aléatoire pour faire plus humain/machine
+        setTimeout(startTypewriter, Math.random() * 50 + 30);
     } else {
-        // Laisser le curseur clignoter à la fin
-        typewriterElement.innerHTML = subtitleText + '<span class="cursor"></span>';
+        typewriterElement.innerHTML = subtitleText + '<span class="cursor blink">_</span>';
     }
 }
 
-// Lancer l'effet après un court déla
-setTimeout(typeWriter, 1000);
 
-// --- 3. Gestion de la Navigation ---
+// --- 4. NAVIGATION SPA ---
 const navButtons = document.querySelectorAll('.nav-btn');
 const sections = document.querySelectorAll('.page-section');
 
 navButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Retirer la classe active de tous les boutons et sections
         navButtons.forEach(b => b.classList.remove('active'));
-        sections.forEach(s => s.classList.remove('active-section'));
-        sections.forEach(s => s.classList.add('hidden'));
+        sections.forEach(s => {
+            s.classList.remove('active-section');
+            s.classList.add('hidden');
+        });
 
-        // Ajouter la classe active au bouton cliqué et à la section correspondante
         btn.classList.add('active');
-        const targetId = btn.getAttribute('data-target');
-        const targetSection = document.getElementById(targetId);
-        
+        const targetSection = document.getElementById(btn.getAttribute('data-target'));
         targetSection.classList.remove('hidden');
         targetSection.classList.add('active-section');
     });

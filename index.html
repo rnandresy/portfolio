@@ -3,89 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Système Initialisé</title>
+    <title>SYS_ADMIN | Profil Bêta</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Séquence de boot initial -->
+    <div id="boot-screen">
+        <div id="boot-text"></div>
+    </div>
+
     <div class="crt-overlay"></div>
     <canvas id="matrix-canvas"></canvas>
 
-    <div class="terminal-container">
-        <!-- Navigation style Terminal -->
+    <div class="terminal-container" id="main-app" style="display: none;">
         <nav class="terminal-nav">
-            <span class="prompt">root@system:~$</span>
+            <span class="prompt">root@fianarantsoa:~$</span> <!-- -->
             <button class="nav-btn active" data-target="home">./accueil.sh</button>
-            <button class="nav-btn" data-target="about">cat about.txt</button>
-            <button class="nav-btn" data-target="projects">ls /projets</button>
-            <button class="nav-btn" data-target="contact">ping contact</button>
+            <button class="nav-btn" data-target="about">cat system_info.txt</button>
+            <button class="nav-btn" data-target="projects">ls /opt/projets</button>
+            <button class="nav-btn" data-target="contact">ping network</button>
         </nav>
 
         <main id="main-content">
-            <!-- PAGE : ACCUEIL -->
+            <!-- ACCUEIL -->
             <section id="home" class="page-section active-section">
                 <header>
-                    <h1 class="glitch" data-text="SYS_ADMIN_READY">SYS_ADMIN_READY</h1>
+                    <h1 class="glitch" data-text="SYS_ADMIN_ONLINE">SYS_ADMIN_ONLINE</h1>
                     <p id="typewriter" class="subtitle"></p>
                 </header>
             </section>
 
-            <!-- PAGE : À PROPOS -->
+            <!-- À PROPOS -->
             <section id="about" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> whoami</div>
+                    <div class="panel-header">>>> systemctl status admin_sys</div>
                     <div class="panel-content">
-                        <p><span class="prompt">Formation:</span> Étudiant en 3ème année de Licence en Administration Système et Réseaux à l'Université de Fianarantsoa.</p>
-                        <p><span class="prompt">Niveau:</span> Bac+2 validé.</p>
+                        <p><span class="prompt">[INFO]</span> Étudiant de 3ème année de licence en administration système et réseaux. <!-- --></p>
+                        <p><span class="prompt">[INFO]</span> Localisation : Université de Fianarantsoa. <!-- --></p>
+                        <p><span class="prompt">[INFO]</span> Accréditation : Niveau Bac+2 validé. <!-- --></p>
                         <br>
-                        <p>Je me spécialise dans la création, la sécurisation et le maintien d'infrastructures informatiques. Mon objectif est d'allier performance réseau et sécurité maximale, tout en explorant les nouvelles technologies d'émulation et de ponts réseaux.</p>
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-header">>>> cat skills.list</div>
-                    <div class="panel-content skill-grid">
-                        <div class="skill-tag">Administration Linux (Kali)</div>
-                        <div class="skill-tag">Réseaux & Ponts Wi-Fi</div>
-                        <div class="skill-tag">Cybersécurité & CTF</div>
-                        <div class="skill-tag">Déploiement VPN</div>
-                        <div class="skill-tag">Émulation Hardware</div>
+                        <p>Opérateur technique polyvalent, capable d'intervenir sur le déploiement d'infrastructures réseaux, la cybersécurité, mais aussi la gestion d'actifs (ayant récemment postulé pour des rôles hybrides comme Assistant Technique et Financier). <!-- --> Je m'intéresse également à la finance décentralisée et au trading d'options binaires (Pocket Option). <!-- --></p>
                     </div>
                 </div>
             </section>
 
-            <!-- PAGE : PROJETS ->
+            <!-- PROJETS (Tes vrais projets terminés) -->
             <section id="projects" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> ls -la /home/projets/</div>
+                    <div class="panel-header">>>> tree /opt/projets/completed/</div>
                     <div class="panel-content project-grid">
+                        
                         <div class="project-card">
-                            <h3>[ Infrastructure Sécurisée ]</h3>
-                            <p>Déploiement, configuration et gestion de serveurs VPN Wireguard sur un environnement Kali Linux.</p>
-                            <span class="tech-stack">#Wireguard #KaliLinux #SecOps</span>
+                            <h3>[ VPN & SecOps ]</h3>
+                            <p>Déploiement et configuration avancée d'une infrastructure VPN Wireguard sur environnement Kali Linux. <!-- --></p>
+                            <span class="tech-stack">#Wireguard #KaliLinux #CyberSec</span>
                         </div>
+
                         <div class="project-card">
-                            <h3>[ Cyber Cup ]</h3>
-                            <p>Préparation technique, entraînement intensif et résolution de défis de cybersécurité pour la compétition Cyber Cup.</p>
-                            <span class="tech-stack">#CTF #CyberSec #Hacking</span>
+                            <h3>[ Opération Cyber Cup ]</h3>
+                            <p>Préparation intensive et résolution de défis de sécurité offensifs/défensifs dans le cadre de la compétition technique Cyber Cup. <!-- --></p>
+                            <span class="tech-stack">#CTF #Hacking #Defense</span>
                         </div>
+
                         <div class="project-card">
-                            <h3>[ Dev: Réseau Social ]</h3>
-                            <p>Conception et développement d'une application de mini réseau social intégrant des fonctionnalités d'interaction uniques.</p>
-                            <span class="tech-stack">#DevApp #Innovation</span>
+                            <h3>[ Émulation Hardware ]</h3>
+                            <p>Expérimentation sur architecture mobile : déploiement de Winlator sur Tecno Pouvoir 4 Pro pour l'exécution d'environnements PC. <!-- --></p>
+                            <span class="tech-stack">#Winlator #ARM #x86 #MobileTech</span>
                         </div>
+
+                        <div class="project-card">
+                            <h3>[ Ponts Wi-Fi Tenda ]</h3>
+                            <p>Configuration, gestion et optimisation d'équipements de pont Wi-Fi Tenda pour l'extension et la stabilité de réseaux locaux. <!-- --></p>
+                            <span class="tech-stack">#Networking #Tenda #Infrastructure</span>
+                        </div>
+
+                        <div class="project-card highlight-card">
+                            <h3>[ Mini Réseau Social ]</h3>
+                            <p>Développement complet d'une application de réseau social miniature intégrant des fonctionnalités d'interaction uniques et originales. <!-- --></p>
+                            <span class="tech-stack">#DevApp #Innovation #Architecture</span>
+                        </div>
+
                     </div>
                 </div>
             </section>
 
-            <!-- PAGE : CONTACT -->
+            <!-- CONTACT -->
             <section id="contact" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> ./etablir_connexion.sh</div>
+                    <div class="panel-header">>>> netstat -an | grep ESTABLISHED</div>
                     <div class="panel-content">
-                        <p>Le système est en écoute de nouvelles opportunités. Prêt à intégrer une équipe technique.</p>
+                        <p>Prêt à établir une connexion sécurisée (P2P ou B2B). En attente de requêtes...</p>
                         <br>
-                        <p><span class="prompt">Email:</span> <a href="mailto:christiano.ofisialy@email.com">christiano.ofisialy@email.com</a></p>
-                        <p><span class="prompt">GitHub:</span> <a href="#" target="_blank">github.com/rnandresy</a></p>
+                        <p><span class="prompt">Email:</span> <a href="mailto:ton.email@email.com">admin@ton-domaine.com</a></p>
+                        <p><span class="prompt">GitHub:</span> <a href="#" target="_blank">github.com/ton-profil</a></p>
                     </div>
                 </div>
             </section>
