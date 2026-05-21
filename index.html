@@ -36,13 +36,47 @@
             <!-- À PROPOS -->
             <section id="about" class="page-section hidden">
                 <div class="panel">
-                    <div class="panel-header">>>> systemctl status admin_sys</div>
-                    <div class="panel-content">
-                        <p><span class="prompt">[INFO]</span> Étudiant de 3ème année de licence en administration système et réseaux. <!-- --></p>
-                        <p><span class="prompt">[INFO]</span> Localisation : Université de Fianarantsoa. <!-- --></p>
-                        <p><span class="prompt">[INFO]</span> Accréditation : Niveau Bac+2 validé. <!-- --></p>
-                        <br>
-                        <p>Opérateur technique polyvalent, capable d'intervenir sur le déploiement d'infrastructures réseaux, la cybersécurité, mais aussi la gestion d'actifs (ayant récemment postulé pour des rôles hybrides comme Assistant Technique et Financier). <!-- --> Je m'intéresse également à la finance décentralisée et au trading d'options binaires (Pocket Option). <!-- --></p>
+                    <div class="panel-header">>>> ./identity_check.sh</div>
+                    
+                    <div class="panel-content profile-layout">
+                        <!-- Bloc Photo -->
+                        <div class="profile-image-container">
+                            <img src="profil.jpg" alt="Photo Profil" class="matrix-photo">
+                            <div class="photo-overlay"></div>
+                            <span class="status-badge">[ ONLINE ]</span>
+                        </div>
+
+                        <!-- Bloc Infos -->
+                        <div class="profile-info">
+                            <p><span class="prompt">[INFO]</span> Étudiant de 3ème année de licence en administration système et réseaux.</p>
+                            <p><span class="prompt">[INFO]</span> Localisation : Université de Fianarantsoa.</p>
+                            <p><span class="prompt">[INFO]</span> Accréditation : Niveau Bac+2 validé.</p>
+                            <br>
+                            <p>Opérateur technique polyvalent, capable d'intervenir sur le déploiement d'infrastructures réseaux, la cybersécurité, mais aussi la gestion d'actifs (assistant technique/financier). Intérêt marqué pour la finance décentralisée et le trading d'options (Pocket Option).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOUVEAU BLOC : MODULE CV -->
+                <div class="panel">
+                    <div class="panel-header">>>> ls -l /documents/cv.pdf</div>
+                    <div class="panel-content cv-module">
+                        <p>Fichier crypté : <strong>cv_admin_reseau.pdf</strong> | Taille : 1.2 MB | Permissions : -rwxr-xr-x</p>
+                        <div class="cv-actions">
+                            <a href="cv.pdf" target="_blank" class="btn-matrix">>>> ./VIEW_CV</a>
+                            <a href="cv.pdf" download="CV_Ton_Nom.pdf" class="btn-matrix download-btn">>>> DOWNLOAD_CV.exe</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">>>> cat skills.list</div>
+                    <div class="panel-content skill-grid">
+                        <div class="skill-tag">Administration Linux (Kali)</div>
+                        <div class="skill-tag">Réseaux & Ponts Wi-Fi</div>
+                        <div class="skill-tag">Cybersécurité & CTF</div>
+                        <div class="skill-tag">Déploiement VPN</div>
+                        <div class="skill-tag">Émulation Hardware</div>
                     </div>
                 </div>
             </section>
